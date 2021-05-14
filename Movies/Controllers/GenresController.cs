@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Data;
 using Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Movies.Controllers
 {
@@ -26,6 +27,7 @@ namespace Movies.Controllers
         }
 
         // GET: Genres/Details/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -54,6 +56,7 @@ namespace Movies.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> Create([Bind("Name,Description,Id")] Genre genre)
         {
             if (ModelState.IsValid)

@@ -49,6 +49,7 @@ namespace Movies.Controllers
         // GET: Movies/Create
         public IActionResult Create()
         {
+            //ViewData["DirectorId"] = new SelectList(_context.Directors, "DirectorId", "DirectorId");
             ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Id");
             ViewData["GradeId"] = new SelectList(_context.Grades, "Id", "Id");
             return View();
@@ -67,6 +68,7 @@ namespace Movies.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            //ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Id", movie.DirectorId);
             ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Id", movie.DirectorId);
             ViewData["GradeId"] = new SelectList(_context.Grades, "Id", "Id", movie.GradeId);
             return View(movie);

@@ -10,15 +10,15 @@ namespace Data.Seed
 
         public static void SeedUsers(UserManager<IdentityUser> userManager)
         {
-            if (userManager.FindByEmailAsync("admin12@abv.bg").Result == null)
+            if (userManager.FindByEmailAsync("Admin1@abv.bg").Result == null)
             {
                 IdentityUser user = new IdentityUser
                 {
-                    UserName = "admin@abv.bg",
-                    Email = "admin@abv.bg"
+                    UserName = "Admin1@abv.bg",
+                    Email = "Admin1@abv.bg"
                 };
 
-                IdentityResult result = userManager.CreateAsync(user, "admin").Result;
+                IdentityResult result = userManager.CreateAsync(user, "Admin1@abv.bg").Result;
 
                 if (result.Succeeded)
                 {
