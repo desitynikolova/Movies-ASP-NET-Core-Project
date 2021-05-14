@@ -50,8 +50,8 @@ namespace Movies.Controllers
         // GET: MovieGenres/Create
         public IActionResult Create()
         {
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id");
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id");
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title");
             return View();
         }
 
@@ -69,8 +69,8 @@ namespace Movies.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id", movieGenre.GenreId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", movieGenre.MovieId);
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", movieGenre.GenreId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", movieGenre.MovieId);
             return View(movieGenre);
         }
 
@@ -87,8 +87,8 @@ namespace Movies.Controllers
             {
                 return NotFound();
             }
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id", movieGenre.GenreId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", movieGenre.MovieId);
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", movieGenre.GenreId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", movieGenre.MovieId);
             return View(movieGenre);
         }
 
@@ -125,15 +125,15 @@ namespace Movies.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id", movieGenre.GenreId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", movieGenre.MovieId);
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", movieGenre.GenreId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", movieGenre.MovieId);
             return View(movieGenre);
         }
 
         // GET: MovieGenres/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? movieId, int? genreId)
         {
-            if (id == null)
+            if (movieId == null && genreId == null)
             {
                 return NotFound();
             }
@@ -141,7 +141,7 @@ namespace Movies.Controllers
             var movieGenre = await _context.MovieGenres
                 .Include(m => m.Genre)
                 .Include(m => m.Movie)
-                .FirstOrDefaultAsync(m => m.MovieId == id);
+                .Where(m => m.MovieId == movieId && m.GenreId == genreId).FirstOrDefaultAsync();
             if (movieGenre == null)
             {
                 return NotFound();
@@ -150,13 +150,37 @@ namespace Movies.Controllers
             return View(movieGenre);
         }
 
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var movieGenre = await _context.MovieGenres
+        //        .Include(m => m.Genre)
+        //        .Include(m => m.Movie)
+        //        .FirstOrDefaultAsync(m => m.MovieId == id);
+        //    if (movieGenre == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(movieGenre);
+        //}
+
+
         // POST: MovieGenres/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int movieId, int genreId)
         {
-            var movieGenre = await _context.MovieGenres.FindAsync(id);
+            var movieGenre = await _context.MovieGenres
+                .Include(m => m.Genre)
+                .Include(m => m.Movie)
+                .Where(m => m.MovieId == movieId && m.GenreId == genreId).FirstOrDefaultAsync();
+            //var movieGenre = await _context.MovieGenres.FindAsync(id);
             _context.MovieGenres.Remove(movieGenre);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

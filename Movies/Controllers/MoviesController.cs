@@ -51,8 +51,8 @@ namespace Movies.Controllers
         public IActionResult Create()
         {
             //ViewData["DirectorId"] = new SelectList(_context.Directors, "DirectorId", "DirectorId");
-            ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Id");
-            ViewData["GradeId"] = new SelectList(_context.Grades, "Id", "Id");
+            ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "FullName");
+            ViewData["GradeId"] = new SelectList(_context.Grades, "Id", "Score");
             return View();
         }
 
@@ -63,15 +63,18 @@ namespace Movies.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,ImageURL,Year,Description,DirectorId,GradeId,Id")] Movie movie)
         {
+            //var currentDirectorName = movie.DirectorId;
+            //var currentDirectorId = _context.Directors.SingleOrDefault(d => d.FullName == currentDirectorName).Id;
             if (ModelState.IsValid)
             {
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Id", movie.DirectorId);
-            ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Id", movie.DirectorId);
-            ViewData["GradeId"] = new SelectList(_context.Grades, "Id", "Id", movie.GradeId);
+            ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "FullName", movie.DirectorId);
+            ViewData["GradeId"] = new SelectList(_context.Grades, "Id", "Score", movie.GradeId);
+            //ViewData["Director"] = new SelectList(_context.Directors, "FullName", "FullName", movie.DirectorId);
+
             return View(movie);
         }
 
@@ -88,8 +91,8 @@ namespace Movies.Controllers
             {
                 return NotFound();
             }
-            ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Id", movie.DirectorId);
-            ViewData["GradeId"] = new SelectList(_context.Grades, "Id", "Id", movie.GradeId);
+            ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "FullName", movie.DirectorId);
+            ViewData["GradeId"] = new SelectList(_context.Grades, "Id", "Score", movie.GradeId);
             return View(movie);
         }
 
@@ -126,8 +129,8 @@ namespace Movies.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Id", movie.DirectorId);
-            ViewData["GradeId"] = new SelectList(_context.Grades, "Id", "Id", movie.GradeId);
+            ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "FullName", movie.DirectorId);
+            ViewData["GradeId"] = new SelectList(_context.Grades, "Id", "Score", movie.GradeId);
             return View(movie);
         }
 
