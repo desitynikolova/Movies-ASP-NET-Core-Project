@@ -40,7 +40,8 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ImageURL)
+                <img class="img-responsive" src="@item.ImageURL" alt="" style="width:200px;height:200px" />
+                @*@Html.DisplayFor(modelItem => item.ImageURL)*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Year)
@@ -49,10 +50,10 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Director.Id)
+                @Html.DisplayFor(modelItem => item.Director.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Grade.Id)
+                @Html.DisplayFor(modelItem => item.Grade.Score)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
