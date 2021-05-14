@@ -27,7 +27,8 @@ namespace Movies.Controllers
         }
 
         // GET: Genres/Details/5
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "User")] the same
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -56,7 +57,7 @@ namespace Movies.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create([Bind("Name,Description,Id")] Genre genre)
         {
             if (ModelState.IsValid)
@@ -89,6 +90,7 @@ namespace Movies.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int id, [Bind("Name,Description,Id")] Genre genre)
         {
             if (id != genre.Id)
@@ -140,6 +142,7 @@ namespace Movies.Controllers
         // POST: Genres/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var genre = await _context.Genres.FindAsync(id);
