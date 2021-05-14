@@ -23,7 +23,7 @@ namespace Movies.Controllers
         // GET: Genres
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Genres.ToListAsync());
+            return View(await _context.Genres.Include(g => g.MovieGenres).ThenInclude(x=>x.Movie).ToListAsync());
         }
 
         // GET: Genres/Details/5

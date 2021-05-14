@@ -23,7 +23,7 @@ namespace Movies.Controllers
         // GET: Directors
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Directors.ToListAsync());
+            return View(await _context.Directors.Include(m=>m.Movies).ToListAsync());
         }
 
         // GET: Directors/Details/5

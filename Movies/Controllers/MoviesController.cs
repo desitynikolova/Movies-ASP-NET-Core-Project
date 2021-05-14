@@ -23,7 +23,7 @@ namespace Movies.Controllers
         // GET: Movies
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Movies.Include(m => m.Director).Include(m => m.Grade);
+            var applicationDbContext = _context.Movies.Include(m => m.Director).Include(m => m.Grade).Include(mg => mg.MovieGenres).ThenInclude(g=>g.Genre);
             return View(await applicationDbContext.ToListAsync());
         }
 

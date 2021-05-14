@@ -18,6 +18,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Comment)
             </th>
+            <th>
+                @Html.Raw("Movies")
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -29,6 +32,19 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @if (item.Movies != null)
+                {
+                    foreach (var movie in item.Movies)
+                    {
+                        if (movie.GradeId == item.Id)
+                        {
+                            @Html.DisplayFor(modelItem => movie.Title);
+                            @Html.Raw("\n")
+                        }
+                    }
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

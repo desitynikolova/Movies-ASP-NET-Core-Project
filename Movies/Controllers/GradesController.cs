@@ -23,7 +23,7 @@ namespace Movies.Controllers
         // GET: Grades
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Grades.ToListAsync());
+            return View(await _context.Grades.Include(g=>g.Movies).ToListAsync());
         }
 
         // GET: Grades/Details/5
@@ -58,6 +58,11 @@ namespace Movies.Controllers
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create([Bind("Score,Comment,Id")] Grade grade)
         {
+            //if (grade.Score < 0 && grade.Score > 5)
+            //{
+
+            //    return RedirectToAction(nameof(Index));
+            //}
             if (ModelState.IsValid)
             {
                 _context.Add(grade);

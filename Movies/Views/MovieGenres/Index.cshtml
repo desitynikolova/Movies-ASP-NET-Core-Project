@@ -31,8 +31,6 @@
                 @Html.DisplayFor(modelItem => item.Genre.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {}) |
-                @Html.ActionLink("Details", "Details", new {}) |
                 @Html.ActionLink("Delete", "Delete", new { item.MovieId, item.GenreId })
             </td>
         </tr>
