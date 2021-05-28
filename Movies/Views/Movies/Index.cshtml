@@ -4,79 +4,80 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageURL)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Year)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Director)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Grade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MovieGenres)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                <img class="img-responsive" src="@item.ImageURL" alt="" style="width:200px;height:200px" />
-                @*@Html.DisplayFor(modelItem => item.ImageURL)*@
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Director.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Grade.Score)
-            </td>
-            <td>
-                @if(item.MovieGenres != null)
-                {
-                foreach (var genre in item.MovieGenres)
-                {
-                    if (genre.MovieId == item.Id)
-                    {
-                        @Html.DisplayFor(modelItem => genre.Genre.Name);
-                        @Html.Raw("\n")
-                    }
-                }                
-                }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<body style="background-color:rgb(67 207 199);">
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImageURL)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Year)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Director)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Grade)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MovieGenres)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        <img class="img-responsive" src="@item.ImageURL" alt="" style="width:200px;height:200px" />
+                        @*@Html.DisplayFor(modelItem => item.ImageURL)*@
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Director.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Grade.Score)
+                    </td>
+                    <td>
+                        @if (item.MovieGenres != null)
+                        {
+                            foreach (var genre in item.MovieGenres)
+                            {
+                                if (genre.MovieId == item.Id)
+                                {
+                                    @Html.DisplayFor(modelItem => genre.Genre.Name);
+                                    @Html.Raw("\n")
+                                }
+                            }
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
