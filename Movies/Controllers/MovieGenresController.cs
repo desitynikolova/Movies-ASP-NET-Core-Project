@@ -20,15 +20,12 @@ namespace Movies.Controllers
             _context = context;
         }
 
-        // GET: MovieGenres
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.MovieGenres.Include(m => m.Genre).Include(m => m.Movie);
             return View(await applicationDbContext.ToListAsync());
         }
 
-
-        // GET: MovieGenres/Create
         public IActionResult Create()
         {
             ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
@@ -36,9 +33,6 @@ namespace Movies.Controllers
             return View();
         }
 
-        // POST: MovieGenres/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
@@ -54,7 +48,6 @@ namespace Movies.Controllers
             ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", movieGenre.MovieId);
             return View(movieGenre);
         }
-        // GET: MovieGenres/Delete/5
         public async Task<IActionResult> Delete(int? movieId, int? genreId)
         {
             if (movieId == null && genreId == null)
@@ -74,7 +67,6 @@ namespace Movies.Controllers
             return View(movieGenre);
         }
 
-        // POST: MovieGenres/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
@@ -84,7 +76,6 @@ namespace Movies.Controllers
                 .Include(m => m.Genre)
                 .Include(m => m.Movie)
                 .Where(m => m.MovieId == movieId && m.GenreId == genreId).FirstOrDefaultAsync();
-            //var movieGenre = await _context.MovieGenres.FindAsync(id);
             _context.MovieGenres.Remove(movieGenre);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

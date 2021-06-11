@@ -20,13 +20,11 @@ namespace Movies.Controllers
             _context = context;
         }
 
-        // GET: Grades
         public async Task<IActionResult> Index()
         {
             return View(await _context.Grades.Include(g=>g.Movies).ToListAsync());
         }
 
-        // GET: Grades/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,25 +42,16 @@ namespace Movies.Controllers
             return View(grade);
         }
 
-        // GET: Grades/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Grades/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create([Bind("Score,Comment,Id")] Grade grade)
         {
-            //if (grade.Score < 0 && grade.Score > 5)
-            //{
-
-            //    return RedirectToAction(nameof(Index));
-            //}
             if (ModelState.IsValid)
             {
                 _context.Add(grade);
@@ -72,7 +61,6 @@ namespace Movies.Controllers
             return View(grade);
         }
 
-        // GET: Grades/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,9 +76,6 @@ namespace Movies.Controllers
             return View(grade);
         }
 
-        // POST: Grades/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
@@ -124,7 +109,6 @@ namespace Movies.Controllers
             return View(grade);
         }
 
-        // GET: Grades/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -142,7 +126,6 @@ namespace Movies.Controllers
             return View(grade);
         }
 
-        // POST: Grades/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]

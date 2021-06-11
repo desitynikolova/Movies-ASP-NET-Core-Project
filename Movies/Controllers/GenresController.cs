@@ -20,14 +20,11 @@ namespace Movies.Controllers
             _context = context;
         }
 
-        // GET: Genres
         public async Task<IActionResult> Index()
         {
             return View(await _context.Genres.Include(g => g.MovieGenres).ThenInclude(x=>x.Movie).ToListAsync());
         }
 
-        // GET: Genres/Details/5
-        //[Authorize(Roles = "User")] the same
         [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
@@ -46,15 +43,11 @@ namespace Movies.Controllers
             return View(genre);
         }
 
-        // GET: Genres/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Genres/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
@@ -69,7 +62,6 @@ namespace Movies.Controllers
             return View(genre);
         }
 
-        // GET: Genres/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,9 +77,6 @@ namespace Movies.Controllers
             return View(genre);
         }
 
-        // POST: Genres/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
@@ -121,7 +110,6 @@ namespace Movies.Controllers
             return View(genre);
         }
 
-        // GET: Genres/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -139,7 +127,6 @@ namespace Movies.Controllers
             return View(genre);
         }
 
-        // POST: Genres/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
