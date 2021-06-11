@@ -11,6 +11,7 @@ namespace Models
     public class Grade : BaseModel
     {
         [Range(0, 5)]
+        [Required]
         public double Score { get; set; }
         [Required]
         public string Comment { get; set; }
