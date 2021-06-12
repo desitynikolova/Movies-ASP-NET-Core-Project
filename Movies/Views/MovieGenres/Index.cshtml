@@ -5,9 +5,12 @@
 }
 
 <body style="background-color:rgb(67 207 199);">
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
+    @if (User.IsInRole("Administrator"))
+    {
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    }
     <table class="table">
         <thead>
             <tr>
@@ -17,22 +20,28 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Genre)
                 </th>
-                <th></th>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <th></th>
+                }
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Movie.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Genre.Name)
-                    </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Movie.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre.Name)
+                </td>
+                @if (User.IsInRole("Administrator"))
+                {
                     <td>
                         @Html.ActionLink("Delete", "Delete", new { item.MovieId, item.GenreId })
                     </td>
+                }
                 </tr>
             }
         </tbody>
